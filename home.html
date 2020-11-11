@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <link rel="stylesheet" href="bootstrap-4.5.2-dist/bootstrap-4.5.2-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="fontawesome-free-5.13.1-web/css/all.min.css">
+  <title>Landing page</title>
+  <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+  <div class="header">
+      <h5>MyBudget</h5>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <h1>Register</h1>
+        <p class="flash" style="color:  red; float: left; font-size: 20px;"></p>
+        <div class="card-body">
+            <i class="fas fa-user"></i>
+          <input type="email" class="eml form-control" id="input-email" placeholder="Email" required>
+            <i class="fas fa-lock"></i>
+          <input type="text" class="pwd form-control" id="input-password" placeholder="Password" required>
+          <button class="btn btn-btn" onclick="register()">Register</button> <br>
+          <a href="index.html">Sign In</a>
+          <p> Already have an account?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script type="text/javascript">
+    function register() {
+      const email = document.getElementById("input-email").value
+      const password = document.getElementById("input-password").value
+
+      fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "email": email,
+          "password": password
+        })
+      }).then((res) => {
+        return res.json();
+
+      }).then(response => {
+        if (response.status == "error") {
+          document.querySelector(".flash").textContent = response.message;
+          return
+        }
+        window.location.href = "index.html"
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
+
+
+  </script>
+
+
+<script src="bootstrap-4.5.2-dist/bootstrap-4.5.2-dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
